@@ -1,0 +1,37 @@
+From f7dab893dd9e8b395d29f9c3de100e61a7be75b9 Mon Sep 17 00:00:00 2001
+From: Xabier Marquiegui <xmarquiegui@ainguraiiot.com>
+Date: Wed, 20 Oct 2021 15:52:28 +0200
+Subject: [PATCH] Remove cmake check for Perl
+
+We set "CMAKE_FIND_ROOT_PATH_MODE_PROGRAM ONLY" in cmake bbclass to
+make sure cmake does not find host programs. In this case we actually
+are fine with host perl: remove the check.
+
+Upstream-Status: Inappropriate [workaround]
+
+Signed-off-by: Jussi Kukkonen <jussi.kukkonen@intel.com>
+---
+ CMakeLists.txt | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index fa6afd3..e7aa5cf 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -177,12 +177,7 @@ if(STATIC_ONLY)
+   )
+ endif()
+ 
+-# must have Perl to create the derived stuff
+-find_package(Perl REQUIRED)
+-set_package_properties(Perl PROPERTIES
+-  TYPE REQUIRED
+-  PURPOSE "Required by the libical build system."
+-)
++set(PERL_EXECUTABLE perl)
+ 
+ # Ensure finding 64bit libs when using 64-bit compilers
+ if(CMAKE_CL_64)
+-- 
+2.25.1
+
